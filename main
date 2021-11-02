@@ -1,0 +1,126 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+void enterString(char* st, int size);
+char* _strcat(char* st1, const char* st2);
+void StrFunc(char* st);
+
+
+
+int main()
+{
+    int size;
+
+    cout << "Enter size of 1 string: ";
+    cin >> size;
+    char* str1 = new char[size];
+
+    cout << "Enter size of 2 string: ";
+    cin >> size;
+    char* str2 = new char[size];
+
+    char tst[1];
+    cin.getline(tst, 1);
+
+    enterString(str1, size);
+    enterString(str2, size);
+    _strcat(str1, str2);
+    cout << str1 << endl;
+
+    cout << "Enter size of string: ";
+    cin >> size;
+    char* str3 = new char[size];
+
+    cin.getline(tst, 1);
+    enterString(str3, size);
+    StrFunc(str3);
+
+    delete[] str1;
+    delete[] str2;
+    delete[] str3;
+}
+
+void enterString(char* st, int size)
+{
+    cout << "Enter str: ";
+    cin.getline(st, size);
+}
+
+char* _strcat(char* st1, const char* st2)
+{
+
+    for (int i = 0; st1[i] + 1; i++)
+    {
+        if (st1[i] == '\0')
+        {
+            for (int j = 0; st2[j] + 1; j++)
+            {
+                if (st2[j] == '\0')
+                {
+                    st1[i] = '\0';
+                    return st1;
+                }
+                st1[i] = st2[j];
+                i++;
+            }
+        }
+    }
+}
+
+void StrFunc(char* st)
+{
+    int min = 1000;
+
+    int min_begin_cord;
+    int min_end_cord;
+
+    int count = 0;
+
+    int end_space_cord;
+    int begin_space_cord = 0;
+
+    for (int i = 0; st[i]; i++)
+    {
+        if (st[i] == ' ' || st[i + 1] == '\0')
+        {
+            if (st[i + 1] == '\0')
+            {
+                end_space_cord = i + 1;
+            }
+            else
+            {
+                end_space_cord = i;
+            }
+            for (int j = begin_space_cord; j < end_space_cord; j++)
+            {
+            
+                for (int k = begin_space_cord; k < end_space_cord; k++)
+                {
+                    if (st[j] != st[k])
+                    {
+                        count++;
+                    }
+                }
+                if (count <= min)
+                {
+                    min_begin_cord = begin_space_cord;
+                    min_end_cord = end_space_cord;
+
+                    min = count;
+                    count = 0;
+
+                }
+            }
+            if (st[i + 1] == '\0')
+            {
+                for (int m = min_begin_cord; m < min_end_cord; m++)
+                {
+                    cout << st[m];
+                }
+            }
+            begin_space_cord = end_space_cord + 1;
+            end_space_cord = 0;
+        }
+    }
+}
